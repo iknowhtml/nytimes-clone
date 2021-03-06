@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState, useRef } from 'react';
 import { jsx, css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Button from './Button';
@@ -52,6 +52,21 @@ const Search = () => {
     </svg>
   );
 
+  const SearchInput = () => {
+    const formInputRef = useRef(null);
+
+    useLayoutEffect(() => {
+      formInputRef.current.focus();
+    }, []);
+
+    return (
+      <Form>
+        <TextInput placeholder="SEARCH" ref={formInputRef} />
+        <SubmitButton>Go</SubmitButton>
+      </Form>
+    );
+  };
+
   return (
     <Container>
       <Button
@@ -61,12 +76,7 @@ const Search = () => {
       >
         <SearchIcon />
       </Button>
-      {isSearchBarVisible && (
-        <Form>
-          <TextInput placeholder="SEARCH" />
-          <SubmitButton>Go</SubmitButton>
-        </Form>
-      )}
+      {isSearchBarVisible && <SearchInput />}
     </Container>
   );
 };
